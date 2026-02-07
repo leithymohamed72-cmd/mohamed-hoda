@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mohamed ❤️ Hoda</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:black;
+color:white;
+overflow:hidden;
+}
+
+/* خلفية قلوب */
+.heart{
+position:fixed;
+bottom:-20px;
+color:#ff2e6e;
+animation: float 6s linear infinite;
+font-size:20px;
+}
+
+@keyframes float{
+0%{transform:translateY(0);}
+100%{transform:translateY(-100vh);}
+}
+
+/* الهيدر */
+header{
+position:fixed;
+top:0;
+width:100%;
+text-align:center;
+padding:20px;
+font-size:26px;
+color:#ff2e6e;
+z-index:10;
+}
+
+/* عداد الأيام */
+.counter{
+position:fixed;
+top:60px;
+width:100%;
+text-align:center;
+font-size:18px;
+color:#fff;
+z-index:10;
+}
+
+/* رسالة */
+.message{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:#111;
+padding:30px;
+border-radius:20px;
+text-align:center;
+z-index:20;
+}
+
+/* swipe */
+.swipe{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.card{
+position:absolute;
+width:320px;
+height:460px;
+border-radius:25px;
+overflow:hidden;
+box-shadow:0 20px 50px rgba(0,0,0,.7);
+cursor:grab;
+background:#000;
+}
+
+.card img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.name{
+position:absolute;
+bottom:20px;
+left:20px;
+font-size:22px;
+font-weight:bold;
+background:rgba(0,0,0,.5);
+padding:8px 16px;
+border-radius:20px;
+}
+
+/* زر واتساب */
+.whatsapp{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#25D366;
+padding:15px 20px;
+border-radius:30px;
+color:white;
+font-weight:bold;
+text-decoration:none;
+z-index:10;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>Mohamed ❤️ Hoda</header>
+
+<div class="counter" id="days"></div>
+
+<div class="message" id="msg">
+<h2>رسالة ليكي ❤️</h2>
+<p>هدي… انتي أجمل حاجة حصلتلي في حياتي</p>
+<button onclick="start()">ابدأ</button>
+</div>
+
+<a class="whatsapp" href="https://wa.me/201000000000">WhatsApp</a>
+
+<section class="swipe">
+
+<div class="card"><img src="1.jpg"><div class="name">Hoda</div></div>
+<div class="card"><img src="2.jpg"><div class="name">Mohamed</div></div>
+<div class="card"><img src="3.jpg"><div class="name">Together</div></div>
+<div class="card"><img src="4.jpg"><div class="name">Love</div></div>
+
+</section>
+
+<audio id="music" loop>
+<source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+/* تشغيل */
+function start(){
+document.getElementById("msg").style.display="none";
+document.getElementById("music").play();
+}
+
+/* عداد الأيام */
+let startDate = new Date("2025-09-19");
+let today = new Date();
+let diff = today - startDate;
+let days = Math.floor(diff / (1000*60*60*24));
+document.getElementById("days").innerText = "مع بعض بقالنا " + days + " يوم ❤️";
+
+/* قلوب */
+setInterval(()=>{
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤";
+heart.style.left=Math.random()*100+"%";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),6000);
+},400);
+
+/* swipe */
+let cards = document.querySelectorAll('.card');
+
+cards.forEach(card => {
+let startX=0;
+
+card.addEventListener('mousedown',e=>{
+startX=e.clientX;
+card.style.transition="none";
+
+document.onmousemove=move;
+
+function move(e){
+let moveX=e.clientX-startX;
+card.style.transform=`translateX(${moveX}px) rotate(${moveX/10}deg)`;
+}
+
+document.onmouseup=()=>{
+document.onmousemove=null;
+
+if(Math.abs(e.clientX-startX)>120){
+card.style.transform=`translateX(${e.clientX>startX?600:-600}px) rotate(${e.clientX>startX?30:-30}deg)`;
+}else{
+card.style.transform="translateX(0)";
+card.style.transition=".3s";
+}
+}
+});
+});
+
+</script>
+
+</body>
+</html>
